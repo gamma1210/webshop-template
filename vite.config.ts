@@ -5,6 +5,7 @@ import tailwind from 'tailwindcss'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+  base: "https://github.com/gamma1210/webshop-template",
   css: {
     postcss: {
       plugins: [tailwind(), autoprefixer()],
