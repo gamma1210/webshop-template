@@ -4,7 +4,7 @@
 
     <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       <div v-for="(product, key) in products" :key="key"
-        class="flex flex-col bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        class="flex flex-col  overflow-hidden  hover:shadow-md transition-shadow">
         <!-- Product Image -->
         <img :src="product.images[0]" :alt="product.name" class="w-full h-52 object-cover">
 

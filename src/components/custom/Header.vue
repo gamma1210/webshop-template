@@ -5,7 +5,7 @@
     <!-- Brand + Nav -->
     <div class="flex items-center gap-8">
       <!-- Logo -->
-      <div class="flex items-center gap-2">
+      <div @click="this.$router.push('/')" class="flex items-center gap-2 cursor-pointer">
         <!-- Placeholder diamond logo SVG -->
         <svg class="w-8 h-8 text-gray-800" fill="none" stroke="currentColor" stroke-width="1.5"
              stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
@@ -80,7 +80,7 @@
       </svg>
 
       <!-- Profile Icon -->
-      <svg
+      <!-- <svg
         class="w-6 h-6 text-gray-700 cursor-pointer hover:text-black transition"
         fill="none"
         stroke="currentColor"
@@ -91,7 +91,7 @@
       >
         <path d="M5.121 17.804A4 4 0 019 16h6a4 4 0 013.879 1.804"></path>
         <path d="M8 9a4 4 0 108 0 4 4 0 00-8 0z"></path>
-      </svg>
+      </svg> -->
 
       <!-- Mobile Nav Toggle (Hamburger) -->
       <svg
@@ -120,7 +120,7 @@
       <ul class="space-y-4 text-gray-700">
         <li><router-link to="/" class="hover:text-black transition">Home</router-link></li>
         <li><router-link to="/shop" class="hover:text-black transition">Shop</router-link></li>
-        <li><router-link to="/product" class="hover:text-black transition">Product</router-link></li>
+        <li><router-link to="/products" class="hover:text-black transition">Product</router-link></li>
         <li><router-link to="/career" class="hover:text-black transition">Career</router-link></li>
       </ul>
     </nav>

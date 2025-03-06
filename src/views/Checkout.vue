@@ -53,7 +53,9 @@
             <p class="font-semibold">{{ product.name }}</p>
             <p class="text-gray-600">x{{ quantity }}</p>
           </div>
-          <p class="ml-auto font-semibold">Rp {{ formatPrice(product.curr_price * quantity) }}</p>
+          <p class="ml-auto font-semibold">
+            Rp {{ formatPrice(product.curr_price * quantity) }}
+          </p>
         </div>
         <p v-else class="text-gray-500">Loading product details...</p>
 
@@ -65,25 +67,63 @@
             <button class="bg-black text-white px-4 rounded-r-lg">Apply</button>
           </div>
           <p class="text-sm mt-2 text-gray-600">
-            New customer? <a href="#" class="text-green-600 font-semibold">Sign up</a> to get better deals.
+            New customer?
+            <a href="#" class="text-green-600 font-semibold">Sign up</a> to get better deals.
           </p>
         </div>
 
         <!-- Summary -->
         <div class="mt-6 border-t pt-4 space-y-2">
-          <p class="flex justify-between"><span>Subtotal</span><span>Rp {{ formatPrice(product?.curr_price * quantity ||
-              0) }}</span></p>
-          <p class="flex justify-between"><span>Discount</span><span>-Rp 0</span></p>
-          <p class="flex justify-between"><span>Shipment cost</span><span>Rp {{ formatPrice(shippingCost) }}</span></p>
+          <p class="flex justify-between">
+            <span>Subtotal</span>
+            <span>Rp {{ formatPrice(product?.curr_price * quantity || 0) }}</span>
+          </p>
+          <p class="flex justify-between">
+            <span>Discount</span>
+            <span>-Rp 0</span>
+          </p>
+          <p class="flex justify-between">
+            <span>Shipment cost</span>
+            <span>Rp {{ formatPrice(shippingCost) }}</span>
+          </p>
           <p class="flex justify-between font-bold text-lg">
             <span>Grand total</span>
-            <span>Rp {{ formatPrice((product?.curr_price * quantity || 0) + shippingCost) }}</span>
+            <span>
+              Rp {{
+              formatPrice((product?.curr_price * quantity || 0) + shippingCost)
+              }}
+            </span>
           </p>
         </div>
 
         <!-- Continue Button -->
-        <button class="mt-6 w-full bg-black text-white py-3 rounded-lg text-lg font-semibold hover:bg-gray-800">
+        <button @click="handleContinue"
+          class="mt-6 w-full bg-black text-white py-3 rounded-lg text-lg font-semibold hover:bg-gray-800">
           Continue to payment
+        </button>
+      </div>
+    </div>
+
+    <!-- Order Confirmation Popup Modal -->
+    <div v-if="showPopup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div class="bg-white p-6 rounded-lg shadow-lg text-center max-w-sm mx-auto">
+        <!-- Checkmark Icon -->
+        <div class="text-green-500">
+          <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        <!-- Confirmation Message -->
+        <h2 class="text-2xl font-bold mt-4">Order Completed!</h2>
+        <p class="mt-2 text-gray-600">
+          Thank you for your purchase. We’ll send your order details once your payment is confirmed.
+        </p>
+        <a @click="openPaymentWindow" class="mt-4 block text-blue-600  cursor-pointer">Payment window not opening? Click here.</a>
+        <!-- Continue Shopping Button -->
+        <button @click="continueShopping"
+          class="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+          Continue Shopping
         </button>
       </div>
     </div>
@@ -92,13 +132,14 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import productsData from "@/assets/products.json";
 
-// Get route params
+// Get route params and router instance
 const route = useRoute();
+const router = useRouter();
 const productId = route.params.productId;
-const selectedColor = ref(route.query.color || '');
+const selectedColor = ref(route.query.color || "");
 const quantity = ref(parseInt(route.query.quantity) || 1);
 const selectedShipping = ref("free");
 
@@ -115,7 +156,63 @@ const shippingCost = computed(() => {
   }
 });
 
-const formatPrice = price => price.toLocaleString("id-ID");
+const formatPrice = (price) => price.toLocaleString("id-ID");
+
+// Modal popup visibility
+const showPopup = ref(false);
+
+function openPaymentWindow() {
+  // Open the payment window
+  window.open(localStorage.getItem("orderBillResponse"), "_blank");
+}
+
+async function handleContinue() {
+  // Open the confirmation modal
+  showPopup.value = true;
+
+  // Create headers for the API request
+  const myHeaders = new Headers();
+  myHeaders.append("x-client-id", "202308011818");
+  myHeaders.append("Content-Type", "application/json");
+
+  // Prepare the request payload
+  const raw = JSON.stringify({
+    email: "abc@gmail.com",
+    gameId: "6672819123",
+    paymentMethod: "QRIS",
+    amount: {
+      value: "10000.00",
+      currency: "IDR"
+    },
+    productName: "Free Fire Max | 70 Free Fire Diamonds"
+  });
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  openPaymentWindow();
+  // try {
+  //   const response = await fetch("https://api-payments.jodogaming.com/api/jodogaming/create-bill", requestOptions);
+  //   console.log("Request sent, response:", response);
+  //   const result = await response.json();
+  //   console.log("data:", result);
+  //   // Save the result to localStorage (as a string)
+  //   localStorage.setItem("orderBillResponse", result.qrUrl);
+  //   console.log("Saved response to localStorage:", result.qrUrl);
+  // } catch (error) {
+  //   console.error("Error in fetch:", error);
+  // }
+}
+
+function continueShopping() {
+  // Close the modal and redirect to /products
+  showPopup.value = false;
+  router.push("/products");
+}
 </script>
 
 <style>
