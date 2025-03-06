@@ -45,7 +45,7 @@
       </div>
 
       <!-- Right: Order Summary (40%) -->
-      <div class="md:col-span-2 bg-gray-100 p-6 rounded-lg shadow-md">
+      <div class="md:col-span-2 bg-white p-6 rounded-lg shadow-md">
         <h2 class="text-lg font-semibold mb-4">Billing Address</h2>
         <div v-if="product" class="flex items-center space-x-4">
           <img :src="product?.images[0]" :alt="product.name" class="w-16 h-16 object-cover rounded-lg" />
