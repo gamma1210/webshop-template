@@ -5,7 +5,8 @@ import tailwind from 'tailwindcss'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: "/webshop-template/",
+  // base: "/webshop-template/",
+  base: "/",
   css: {
     postcss: {
       plugins: [tailwind(), autoprefixer()],

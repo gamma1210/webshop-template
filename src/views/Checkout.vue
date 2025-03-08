@@ -194,18 +194,18 @@ async function handleContinue() {
     redirect: "follow",
   };
 
-  openPaymentWindow();
-  // try {
-  //   const response = await fetch("https://api-payments.jodogaming.com/api/jodogaming/create-bill", requestOptions);
-  //   console.log("Request sent, response:", response);
-  //   const result = await response.json();
-  //   console.log("data:", result);
-  //   // Save the result to localStorage (as a string)
-  //   localStorage.setItem("orderBillResponse", result.qrUrl);
-  //   console.log("Saved response to localStorage:", result.qrUrl);
-  // } catch (error) {
-  //   console.error("Error in fetch:", error);
-  // }
+  try {
+    const response = await fetch("https://api-payments.jodogaming.com/api/jodogaming/create-bill", requestOptions);
+    console.log("Request sent, response:", response);
+    const result = await response.json();
+    console.log("data:", result);
+    // Save the result to localStorage (as a string)
+    localStorage.setItem("orderBillResponse", result.qrUrl);
+    console.log("Saved response to localStorage:", result.qrUrl);
+    openPaymentWindow();
+  } catch (error) {
+    console.error("Error in fetch:", error);
+  }
 }
 
 function continueShopping() {
