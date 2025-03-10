@@ -25,9 +25,9 @@ onMounted(() => {
       <div ref="heroText" class="relative text-center text-white px-4">
         <h1 class="text-5xl font-bold mb-4">Elevate Your Workout</h1>
         <p class="text-xl mb-8">Experience the ultimate in fitness and wellness with our premium gear.</p>
-        <button class="mt-6 px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition">
+        <!-- <button class="mt-6 px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition">
           Shop Now
-        </button>
+        </button> -->
       </div>
         </div>
 
@@ -44,6 +44,9 @@ onMounted(() => {
             Rp{{ product.curr_price.toLocaleString("id-ID") }}
           </p>
         </div>
+        <button @click="$router.push(`/product/${product.link}`)" class="mt-auto px-4 py-2 bg-black text-white font-semibold hover:bg-black-700 transition">
+          See Product
+        </button>
       </div>
     </div>
     

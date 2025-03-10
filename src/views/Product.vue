@@ -40,8 +40,8 @@
           </p>
         </div>
 
-        <!-- Description -->
-        <p class="text-gray-700 mt-4 leading-relaxed text-center" v-html="product?.description"></p>
+        <!-- Description without iframes -->
+        <p class="text-gray-700 mt-4 leading-relaxed text-center" v-html="sanitizedDescription"></p>
 
         <!-- Color Options -->
         <div class="mt-4">
@@ -68,7 +68,7 @@
         <!-- Add to Cart Button -->
         <div class="flex justify-center mt-6">
           <button 
-            @click="goToCheckout(key)"
+            @click="goToCheckout()"
             class="bg-black text-white text-lg font-semibold py-4 px-12 rounded-lg hover:bg-gray-800 transition">
             Buy
           </button>
@@ -106,7 +106,16 @@ const goToCheckout = () => {
 
 const decreaseQuantity = () => {
   if (quantity.value > 1) quantity.value--;
-  console.log(product)
 };
 const increaseQuantity = () => quantity.value++;
+
+// Computed property to sanitize description by removing iframes
+const sanitizedDescription = computed(() => {
+  if (!product.value?.description) return '';
+  const temp = document.createElement('div');
+  temp.innerHTML = product.value.description;
+  // Remove all iframe elements
+  temp.querySelectorAll('iframe').forEach(iframe => iframe.remove());
+  return temp.innerHTML;
+});
 </script>

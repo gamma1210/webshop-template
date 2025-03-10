@@ -6,7 +6,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   // base: "/webshop-template/",
-  base: "/",
+  // base: "/",
   css: {
     postcss: {
       plugins: [tailwind(), autoprefixer()],

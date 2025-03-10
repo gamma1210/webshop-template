@@ -33,6 +33,5 @@
     "typescript": "~5.7.2",
     "vite": "^6.2.0",
     "vue-tsc": "^2.2.4"
-  },
-  "homepage": "https://github.com/gamma1210/webshop-template"
+  }
 }

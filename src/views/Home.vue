@@ -15,7 +15,7 @@
         <p class="text-lg mt-4">
           Experience comfort and durability with our premium selection.
         </p>
-        <button @click="$router.push('/shop')"
+        <button @click="$router.push('/products')"
           class="mt-6 px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition">
           Shop Now
         </button>

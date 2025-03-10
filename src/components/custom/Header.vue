@@ -6,15 +6,8 @@
     <div class="flex items-center gap-8">
       <!-- Logo -->
       <div @click="this.$router.push('/')" class="flex items-center gap-2 cursor-pointer">
-        <!-- Placeholder diamond logo SVG -->
-        <svg class="w-8 h-8 text-gray-800" fill="none" stroke="currentColor" stroke-width="1.5"
-             stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-          <path d="M12 2 L2 9 L12 22 L22 9 Z" />
-          <path d="M2 9 L12 9 L22 9" />
-          <path d="M7 9 L10 16" />
-          <path d="M14 16 L17 9" />
-        </svg>
-        <span class="font-bold text-xl text-gray-800">BrandName</span>
+        <img src="@/assets/logo.png" alt="Brand Logo" class="w-8 h-8" />
+        <span class="font-bold text-xl text-gray-800">{{ $appName.charAt(0).toUpperCase() + $appName.slice(1) }}</span>
       </div>
 
       <!-- Desktop Nav -->
